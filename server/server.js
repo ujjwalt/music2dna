@@ -1,20 +1,19 @@
 Meteor.startup(function () {
-  // Complete all uncomplete jobs
-  Jobs.update({}, {$set: {completed: true}});
-  setupNewJob();
   // Setup MIDI
   setupMIDI();
 });
 
 Meteor.methods({
   job: function() {
-    return job._id;
+    // Complete all uncomplete jobs
+    Jobs.update({}, {$set: {completed: true}});
+    return setupNewJob();
   }
 })
 
 function setupNewJob() {
   // Create a brand new job
-  Jobs.insert({
+  return Jobs.insert({
     music: [],
     dna: [],
     completed: false
