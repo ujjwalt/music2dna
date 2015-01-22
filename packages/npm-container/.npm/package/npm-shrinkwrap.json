@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "midi": {
+      "version": "0.9.0",
+      "dependencies": {
+        "bindings": {
+          "version": "1.2.1"
+        }
+      }
+    }
+  }
+}

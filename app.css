@@ -1,0 +1,25 @@
+body, .container {
+  padding: 0; margin: 0;
+}
+
+#new {
+  position: relative;
+  top: 100px;
+}
+
+.dna {
+  height: 100vh;
+}
+
+.notes, .sequence {
+  height: 50vh;
+}
+
+.dna, .sequence, .notes {
+  border: 1px solid red;
+  padding: 0;
+}
+
+canvas {
+  background-color: #000;
+}
