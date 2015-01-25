@@ -109,14 +109,17 @@ function nucleotideFor(nucleotide) {
 
 Template.player.rendered = function() {
   renderDNA();
+  // renderSequence();
   // Observe changes
   Meteor.call("job", function(error, id) {
     if (!!error) {
       return;
     }
-    // console.log(id);
+    Session.set('job', id);
+    
     var query = Jobs.find({_id: id});
-    setupDNA(query);
+    var queryLength = 10;
+    holder.position.y = queryLength*2.1;
 
     query.observeChanges({
       changed: function(id, fields) {
@@ -124,29 +127,34 @@ Template.player.rendered = function() {
         var lastNote = fields.music[fields.music.length-1];
         moveUp();
         addNucleotide(fields.dna.length-1, lastDNA);
+        // addSequence(fields.dna.join(''));
       }
     });
   });
 }
 
-function setupDNA(query) {
-  var sequence = query.fetch();
-  if (sequence.length > 0 && sequence[0].dna.length > 0) {
-    sequence = sequence[0];
-    var queryLength = sequence.dna.length;
-    // Render the initial DNA
-    for (var i = 0; i < queryLength; i++) {
-      addNucleotide(i, sequence.dna[i]);
-    }
-  } else {
-    var queryLength = 10;
-  }
-  
-  holder.position.y = queryLength*2.1;
-}
-
 Template.layout.events({
   'click #new-job': function() {
     location.reload();
+  }
+});
+
+Template.player.helpers({
+  dnaText: function() {
+    // console.log(Jobs.findOne({_id: Session.get('job')}));
+    var j = Jobs.findOne({_id: Session.get('job')})
+    if (j) return j.dna.join('');
+  },
+
+  notesText: function() {
+    var j = Jobs.findOne({_id: Session.get('job')});
+    var notes = "";
+    if (j) {
+      for (var i = 0; i < j.music.length; i++) {
+        var n = j.music[i].message[1];
+        notes += " " + midimap[n];
+      }
+    }
+    return notes;
   }
 })

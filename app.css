@@ -16,19 +16,28 @@ body, .container {
 }
 
 .dna, .sequence, .notes {
-  border: 1px solid red;
   padding: 0;
+}
+
+.notes {
+  border-top: 1px solid red;
 }
 
 canvas {
   background-color: #000;
 }
 
-.glyphicon.glyphicon-remove-circle {
+.glyphicon-remove-circle {
   position: fixed;
   top: 7px;
-  left: 7px;
+  right: 7px;
   font-size: 2rem;
   cursor: pointer;
   z-index: 99;
+  color: #fff;
+}
+
+.sequence, .notes {
+  word-wrap: break-word;
+  overflow: scroll;
 }
